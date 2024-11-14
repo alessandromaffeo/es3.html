@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatore Decrementale</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        #countdown {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        #image-container {
+            display: none; 
+            margin-top: 20px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">3</div>
+
+    <div id="image-container">
+        <img src="https://www.rainews.it/dl/img/2022/05/29/1653823359813_Immagine__.png" alt="Immagine di esempio">
+    </div>
+
+    <script>
+        
+        let count = 3;
+
+       
+        function updateCountdown() {
+            
+            document.getElementById('countdown').textContent = count;
+            
+            
+            count--;
+            
+            
+            if (count < 0) {
+                document.getElementById('image-container').style.display = 'block';
+                return; 
+            }
+        }
+
+       
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
