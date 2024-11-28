@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulazione verifica (compito di javascript)</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .countdown {
+            font-size: 5em;
+        }
+
+        .hidden-image {
+            display: none; 
+        }
+
+        img {
+            width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">3</div>
+    <div class="hidden-image" id="hiddenImage">
+        <img src="" alt="Risultato" id="resultImage"/>
+    </div>
+
+    <script>
+        let countdownNumber = 3;
+        const countdownElement = document.getElementById('countdown');
+        const hiddenImage = document.getElementById('hiddenImage');
+        const resultImage = document.getElementById('resultImage');
+
+        function getRandomImage() {
+            const randomNumber = Math.floor(Math.random() * 3) + 1;
+            let imagePath = "";
+
+            if (randomNumber === 1) {
+                imagePath = "image1.jpg"; 
+            } else if (randomNumber === 2) {
+                imagePath = "image2.jpg"; 
+            } else if (randomNumber === 3) {
+                imagePath = "image3.jpg"; 
+            }
+
+            return imagePath;
+        }
+
+        const countdownInterval = setInterval(() => {
+            if (countdownNumber > 0) {
+                countdownElement.textContent = countdownNumber;
+                countdownNumber--;
+            } else {
+                clearInterval(countdownInterval);
+                countdownElement.style.display = 'none'; 
+                const imageToShow = getRandomImage();
+                resultImage.src = imageToShow; 
+                hiddenImage.style.display = 'block'; 
+            }
+        }, 1000);
+    </script>
+</body>
+</html
