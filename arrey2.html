@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array Numeri Casuali</title>
+</head>
+<body>
+
+<h1>Array di Numeri Casuali</h1>
+
+<div id="container">
+  <p id="out1">I numeri appariranno qui.</p>
+  <p id="out2">Media dei numeri estratti: </p>
+</div>
+
+<script>
+
+let numeri = [];
+
+function estraiNumero() {
+  let numeroCasuale = Math.floor(Math.random() * 90) + 1; 
+  numeri.push(numeroCasuale);
+  
+
+  document.getElementById("out1").innerHTML = numeri.join(", ");
+  
+  calcolaMedia();
+}
+
+
+function calcolaMedia() {
+  let somma = numeri.reduce((acc, num) => acc + num, 0);
+  let media = somma / numeri.length;
+
+  document.getElementById("out2").innerHTML = "Media dei numeri estratti: " + media.toFixed(2);
+}
+
+
+setInterval(estraiNumero, 3000);
+</script>
+
+</body>
+</html>
