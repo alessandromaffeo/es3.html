@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fullstack sushi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      .card {
+        height: 100%; 
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card-title {
+        font-size: 1.25rem; 
+      }
+      .card-text {
+        font-size: 1rem; 
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="data:image/png;base64,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" alt="" width="120" height="90">
+            fullstack sushi
+          </a>
+        </div>
+      </nav>
+      <div class="container my-5 text-center" style="max-width: 580px;">
+        <h1>sushi per programmatori</h1>
+        <p class="lead">Il sushi è un piatto tipico della tradizione culinaria giapponese a base di riso, accompagnato da pesce fresco (salmone, tonno, gamberi, spigola, ecc.), alga nori, uova di pesce o verdure.</p>
+        <button type="button" class="btn btn-primary">ordina subito</button>
+        <button type="button" class="btn btn-secondary">contattaci</button>
+      </div>
+      <div class="container">
+        <div class="row">
+        
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <img src="https://www.shutterstock.com/image-photo/closeup-shot-mouthwatering-maki-sushi-260nw-2524703473.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">sushi misto 1</h5>
+                <p class="card-text">Una polpettina di riso di forma ovale, circondata da una striscia di nori, con degli ingredienti, come uova di pesce, impilati sopra.</p>
+                <a href="#" class="btn btn-primary">acquista</a>
+              </div>
+            </div>
+          </div>
+         
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Salmon_Sushi.jpg/1024px-Salmon_Sushi.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">sushi misto 2</h5>
+                <p class="card-text">Una polpettina di riso di forma ovale, circondata da una striscia di nori, con degli ingredienti, come uova di pesce, impilati sopra.</p>
+                <a href="#" class="btn btn-primary">acquista</a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <img src="https://img.lovepik.com/photo/20211130/medium/lovepik-sushi-picture_501272791.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">sushi misto 3</h5>
+                <p class="card-text">Una polpettina di riso di forma ovale, circondata da una striscia di nori, con degli ingredienti, come uova di pesce, impilati sopra.</p>
+                <a href="#" class="btn btn-primary">acquista</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <img src="https://media.istockphoto.com/id/1053853732/it/foto/cibo-sushi-maki.jpg?s=612x612&w=0&k=20&c=_JeqS23XMp5BH8NYZNK-tej5kjynHqjORpwi_FZ1_PY=" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">sushi misto 4</h5>
+                <p class="card-text">Una polpettina di riso di forma ovale, circondata da una striscia di nori, con degli ingredienti, come uova di pesce, impilati sopra.</p>
+                <a href="#" class="btn btn-primary">acquista</a>
+              </div>
+            </div>
+          </div>
+         
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <img src="https://media.istockphoto.com/id/1354366250/it/foto/set-di-involtini-di-sushi-uramaki-arcobaleno-con-avocado.jpg?s=612x612&w=0&k=20&c=r4R3kP17rK2S4afKXomeqSbE_cgVbA5hJbkYnfw026E=" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">sushi misto 5</h5>
+                <p class="card-text">Una polpettina di riso di forma ovale, circondata da una striscia di nori, con degli ingredienti, come uova di pesce, impilati sopra.</p>
+                <a href="#" class="btn btn-primary">acquista</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
