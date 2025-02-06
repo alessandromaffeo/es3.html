@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Javascript Time Salva Bottoni</title>
+  <style> 
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #000000;
+      margin-bottom: 20px;
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button1 {
+      background-color: #6900f3;
+    }
+
+    .button1:hover {
+      background-color: #930feb;
+      transform: scale(1.1);
+    }
+
+    .button1:active {
+      background-color: #7d388e;
+    }
+
+    .button2 {
+      background-color: #007BFF;
+    }
+
+    .button2:hover {
+      background-color: #0056b3;
+      transform: scale(1.1);
+    }
+
+    .button2:active {
+      background-color: #004085;
+    }
+
+    .button3 {
+      background-color: #FFC107;
+    }
+    .button3:hover {
+      background-color: #e0a800;
+      transform: scale(1.1);
+    }
+    .button3:active {
+      background-color: #c69500;
+    }
+    .button4 {
+      background-color: #71f803;
+    }
+    .button4:hover {
+      background-color: #12d600;
+      transform: scale(1.1);
+    }
+    .button4:active {
+      background-color: #028f02;
+    }
+    #output, #timeOutput {
+      font-size: 18px;
+      color: #555;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #timeOutput {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Javascript time salva bottoni</h1>
+  <div class="buttons-container">
+    <button class="button button1" onclick="mostraDataOra('Bottone 1')">Bottone 1</button>
+    <button class="button button2" onclick="mostraDataOra('Bottone 2')">Bottone 2</button>
+    <button class="button button3" onclick="mostraDataOra('Bottone 3')">Bottone 3</button>
+    <button class="button button4" onclick="mostraDataOra('Bottone 4')">Bottone 4</button>
+  </div>
+  <p id="output"></p>
+  <p id="timeOutput"></p>
+  <script>
+    let tempoIniziale = null;
+    let tempiClick = [];
+    function mostraDataOra(buttonId) {
+      const dataOra = new Date();
+      const formatoData = dataOra.toLocaleString('it-IT');
+      document.getElementById("output").innerHTML = `Hai premuto il bottone: ${buttonId} - Data e Ora: ${formatoData}`;
+      const now = performance.now(); 
+      if (tempoIniziale === null) {
+        tempoIniziale = now; 
+        document.getElementById("timeOutput").innerHTML = `Primo click registrato al tempo: 0.000 secondi`;
+      } else {
+        const tempoTrascorso = (now - tempoIniziale) / 1000;
+        tempiClick.push(tempoTrascorso.toFixed(3)); 
+        document.getElementById("timeOutput").innerHTML = `Hai premuto il bottone: ${buttonId}. Tempo trascorso dal primo click: ${tempoTrascorso.toFixed(3)} secondi.`;
+      }
+      console.log("Tempi dei click: ", tempiClick); 
+    }
+  </script>
+
+</body>
+</html>
