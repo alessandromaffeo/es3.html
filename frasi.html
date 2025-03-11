@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Frasi Casuali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Generatore di Frasi Casuali</h1>
+    
+    <button onclick="generaFraseCasuale()">Genera Frase</button>
+    
+    <p id="output">Premi il pulsante per generare una frase!</p>
+
+    <script>
+        let soggetti = ["Mario", "Luca", "Giulia", "Anna", "Francesco", "Elena", "Roberto", "Sara", "Davide", "Chiara"];
+        let verbi = ["mangia", "corre", "legge", "scrive", "disegna", "parla", "cammina", "guarda", "ascolta", "gioca"];
+        let complemento = ["una mela", "nel parco", "un libro", "una lettera", "un quadro", "al telefono", "sul marciapiede", "la TV", "musica", "a calcio"];
+
+        function generaFraseCasuale() {
+            let soggetto = soggetti[Math.floor(Math.random() * soggetti.length)];
+            let verbo = verbi[Math.floor(Math.random() * verbi.length)];
+            let compl = complemento[Math.floor(Math.random() * complemento.length)];
+            
+            let frase = `${soggetto} ${verbo} ${compl}.`;
+            document.getElementById("output").innerText = frase;
+        }
+    </script>
+
+</body>
+</html>
