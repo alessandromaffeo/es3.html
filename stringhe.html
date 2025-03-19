@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Stringhe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .output {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .output strong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestione Stringhe</h1>
+    <form id="stringForm">
+        <label for="stringA">Stringa A:</label>
+        <input type="text" id="stringA" required>
+        <label for="stringB">Stringa B:</label>
+        <input type="text" id="stringB" required>
+        <button type="submit">Invia</button>
+    </form>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        function calcolaLunghezza(stringa) {
+            return stringa.length;
+        }
+
+        function invertiStringa(stringa) {
+            return stringa.split('').reverse().join('');
+        }
+
+        function unisciStringhe(stringaA, stringaB) {
+            return stringaA + stringaB;
+        }
+
+        function generaMessaggio(stringaA, stringaB) {
+            const lunghezzaA = calcolaLunghezza(stringaA);
+            const lunghezzaB = calcolaLunghezza(stringaB);
+            const stringaInvertitaA = invertiStringa(stringaA);
+            const stringaInvertitaB = invertiStringa(stringaB);
+            const stringheUnite = unisciStringhe(stringaA, stringaB);
+            const lunghezzaTotale = lunghezzaA + lunghezzaB;
+
+            let messaggio = `Lunghezza Stringa A: ${lunghezzaA}<br>
+                             Lunghezza Stringa B: ${lunghezzaB}<br>
+                             Stringa A al contrario: ${stringaInvertitaA}<br>
+                             Stringa B al contrario: ${stringaInvertitaB}<br>
+                             Stringhe unite: ${stringheUnite}<br>
+                             Somma delle lunghezze: ${lunghezzaTotale}`;
+
+            if (lunghezzaB > 20) {
+                messaggio += "<br><strong>B troppo lunga</strong>";
+            }
+
+            return messaggio;
+        }
+
+        document.getElementById('stringForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const stringA = document.getElementById('stringA').value;
+            const stringB = document.getElementById('stringB').value;
+
+            const messaggio = generaMessaggio(stringA, stringB);
+
+            document.getElementById('output').innerHTML = messaggio;
+        });
+    </script>
+
+</body>
+</html>
