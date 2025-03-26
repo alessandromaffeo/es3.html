@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo dei Risultati</title>
+    <style>
+        /* CSS per migliorare il layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .explanation {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+            text-align: left;
+        }
+
+        .explanation p {
+            margin: 10px 0;
+        }
+
+        .example {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        // Funzione per calcolare il primo risultato
+        function calcolaPrimoRisultato(a, b, c, d) {
+            return (a * b) + (c * d);
+        }
+
+        // Funzione per calcolare il secondo risultato (radice quadrata del primo risultato)
+        function calcolaSecondoRisultato(risultato1) {
+            return risultato1 >= 0 ? Math.sqrt(risultato1) : "Non esiste radice quadrata per numeri negativi";
+        }
+
+        // Funzione principale che ottiene i dati dal form, calcola i risultati e li visualizza
+        function mostraRisultati() {
+            // Ottieni i valori dai campi del form
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            let d = parseFloat(document.getElementById("d").value);
+
+            // Calcola il primo risultato
+            let risultato1 = calcolaPrimoRisultato(a, b, c, d);
+
+            // Calcola il secondo risultato
+            let risultato2 = calcolaSecondoRisultato(risultato1);
+
+            // Mostra i risultati nella pagina
+            document.getElementById("risultato1").innerText = "Risultato 1: " + risultato1;
+            document.getElementById("risultato2").innerText = "Risultato 2: " + risultato2;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcolo dei Risultati</h1>
+        
+        <form onsubmit="event.preventDefault(); mostraRisultati();">
+            <input type="number" id="a" placeholder="Numero a" required><br>
+            <input type="number" id="b" placeholder="Numero b" required><br>
+            <input type="number" id="c" placeholder="Numero c" required><br>
+            <input type="number" id="d" placeholder="Numero d" required><br>
+            <button type="submit">Calcola</button>
+        </form>
+
+        <div id="risultato1" class="result"></div>
+        <div id="risultato2" class="result"></div>
+
+        <div class="explanation">
+    </div>
+</body>
+</html>
