@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Reaction Game</title>
+    <style>
+        /* Stili CSS */
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        #game-container {
+            text-align: center;
+            width: 80%;
+            height: 80%;
+            position: relative;
+        }
+
+        #reaction-time {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #start-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        #start-button:hover {
+            background-color: #45a049;
+        }
+
+        #flash-object {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin: 20px auto;
+            border-radius: 50%;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        #reaction-times-list {
+            margin-top: 20px;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .reaction-time-item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="reaction-time">Tempo di reazione: -- ms</div>
+        <button id="start-button">Inizia il gioco</button>
+        <div id="flash-object"></div>
+        <div id="reaction-times-list"></div> <!-- Area per visualizzare i tempi -->
+    </div>
+
+    <script>
+        // Logica JavaScript
+
+        let startButton = document.getElementById("start-button");
+        let flashObject = document.getElementById("flash-object");
+        let reactionTimeDisplay = document.getElementById("reaction-time");
+        let reactionTimesList = document.getElementById("reaction-times-list");
+
+        let startTime, endTime, reactionTime;
+        let reactionTimes = []; // Array per memorizzare i tempi di reazione
+
+        function getRandomPosition() {
+            // Ottieni una posizione casuale per l'oggetto
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            return { x, y };
+        }
+
+        function startGame() {
+            // Reset del gioco
+            reactionTimeDisplay.textContent = "Tempo di reazione: -- ms";
+            startButton.style.visibility = 'hidden';
+            flashObject.style.visibility = 'hidden';
+            
+            // Ritardo casuale prima che l'oggetto appaia
+            let delay = Math.random() * 2000 + 1000; // tra 1 e 3 secondi
+            setTimeout(() => {
+                // Posiziona l'oggetto in una posizione casuale
+                let position = getRandomPosition();
+                flashObject.style.left = position.x + "px";
+                flashObject.style.top = position.y + "px";
+                flashObject.style.visibility = 'visible';
+                
+                // Registra il tempo di apparenza
+                startTime = new Date().getTime();
+            }, delay);
+        }
+
+        flashObject.addEventListener("click", function() {
+            // Calcola il tempo di reazione
+            endTime = new Date().getTime();
+            reactionTime = endTime - startTime;
+            
+            // Mostra il tempo di reazione
+            reactionTimeDisplay.textContent = `Tempo di reazione: ${reactionTime} ms`;
+            
+            // Aggiungi il tempo all'array
+            if (reactionTimes.length >= 100) {
+                reactionTimes.shift(); // Rimuove il primo valore quando l'array ha 100 elementi
+            }
+            reactionTimes.push(reactionTime);
+            
+            // Visualizza tutti i tempi di reazione
+            displayReactionTimes();
+
+            // Nascondi l'oggetto e mostra il bottone per un nuovo round
+            flashObject.style.visibility = 'hidden';
+            startButton.style.visibility = 'visible';
+        });
+
+        startButton.addEventListener("click", startGame);
+
+        function displayReactionTimes() {
+            // Aggiunge i tempi all'area di visualizzazione
+            reactionTimesList.innerHTML = '';
+            reactionTimes.forEach(function(time) {
+                let timeItem = document.createElement('span');
+                timeItem.classList.add('reaction-time-item');
+                timeItem.textContent = time + ' ms';
+                reactionTimesList.appendChild(timeItem);
+            });
+        }
+    </script>
+</body>
+</html>
