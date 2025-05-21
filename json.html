@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gioco Tempi di Reazione</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #jsonFile {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gioco Tempi di Reazione</h1>
+  <p>Premi il pulsante per vedere il tuo risultato!</p>
+
+  <!-- Pulsante per generare il file JSON -->
+  <button onclick="generaJson()">Genera JSON con i Risultati</button>
+
+  <!-- Div per mostrare il link al file JSON -->
+  <div id="jsonFile"></div>
+
+  <script>
+    // Array con i risultati del gioco
+    let risultati = [
+      { nome: "Giocatore 1", tempo: 350 },
+      { nome: "Giocatore 2", tempo: 275 },
+      { nome: "Giocatore 3", tempo: 400 }
+    ];
+
+    // Funzione per generare il file JSON
+    function generaJson() {
+      // Converti l'array di risultati in formato JSON
+      let jsonData = JSON.stringify(risultati, null, 2);
+
+      // Crea un oggetto Blob con i dati JSON
+      let blob = new Blob([jsonData], { type: 'application/json' });
+
+      // Crea un URL per il Blob
+      let url = URL.createObjectURL(blob);
+
+      // Crea un link per il download del file JSON
+      let link = document.createElement("a");
+      link.href = url;
+      link.download = "risultati_gioco.json";
+      link.textContent = "Scarica il file JSON con i risultati";
+
+      // Mostra il link per il download
+      document.getElementById("jsonFile").innerHTML = '';
+      document.getElementById("jsonFile").appendChild(link);
+    }
+  </script>
+
+</body>
+</html>
