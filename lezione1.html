@@ -1,0 +1,45 @@
+<div id="app">
+  
+  <h2>Profilo Utente</h2>
+  <p>Nome: {{ nome }}</p>
+  <p>Cognome: {{ cognome }}</p>
+  <p>Città: {{ citta }}</p>
+
+  
+  <h2>Dettagli Prodotto</h2>
+  <p>Il prodotto {{ nomeProdotto }} costa {{ prezzo }} €.</p>
+
+  
+  <h2>Immagine Disattivata</h2>
+  <button v-bind:disabled="immagineDisabilitata">Cliccami</button>
+
+  
+  <h2>Tooltip Dinamico</h2>
+  <p v-bind:title="messaggioTooltip">
+    Passa il mouse su questo testo per vedere il tooltip.
+  </p>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const { createApp } = Vue;
+
+  createApp({
+    data() {
+      return {
+       
+        nome: "Mario",
+        cognome: "Rossi",
+        citta: "Roma",
+
+        
+        nomeProdotto: "Cuffie Bluetooth",
+        prezzo: 59.99,
+
+        
+        immagineDisabilitata: true, 
+        messaggioTooltip: "Questo è un tooltip dinamico!"
+      };
+    }
+  }).mount("#app");
+</script>
