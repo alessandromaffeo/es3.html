@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Sportiva</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 20px; color: #333; }
+        
+        .traffic-light-box { 
+            padding: 10px; 
+            border: 1px solid; 
+            border-radius: 4px; 
+            display: inline-block; 
+            font-weight: bold; 
+            margin-top: 10px;
+        }
+        .rosso { background-color: #ffdddd; color: #cc0000; border-color: #cc0000; }
+        .giallo { background-color: #fffacd; color: #daa520; border-color: #daa520; }
+        .verde { background-color: #ddffdd; color: #008000; border-color: #008000; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #333; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dashboard Sportiva Completa</h1>
+
+    <h2>1) Stato Utente</h2>
+    <div id="login-status"></div>
+
+    <h2>2) Semaforo Partita</h2>
+    <div id="traffic-light-status"></div>
+
+    <h2>3) Classifica Squadre Preferite</h2>
+    <div id="team-ranking"></div>
+
+    <h2>4) Catalogo Merchandising</h2>
+    <div id="product-catalog"></div>
+</div>
+
+<script>
+    const isLoggedIn = true;
+    const loginStatusDiv = document.getElementById('login-status');
+
+    if (isLoggedIn) {
+        loginStatusDiv.innerHTML = "<p style='color: green;'>✅ <strong>Benvenuto, Tifoso!</strong> La tua sessione è attiva.</p>";
+    } else {
+        loginStatusDiv.innerHTML = "<p style='color: red;'>❌ Per favore, accedi per vedere i contenuti personalizzati.</p>";
+    }
+
+    const coloreSemaforo = 'verde';
+    const trafficLightDiv = document.getElementById('traffic-light-status');
+    let message = "";
+    let className = "";
+
+    switch (coloreSemaforo) {
+        case 'rosso':
+            message = "🔴 Stop! Partita Finita. Analizza il risultato.";
+            className = "rosso";
+            break;
+        case 'giallo':
+            message = "🟠 Attenzione! Intervallo/Sospensione. Preparati alla ripresa.";
+            className = "giallo";
+            break;
+        case 'verde':
+            message = "🟢 Vai! Partita in Corso. Goditi lo spettacolo!";
+            className = "verde";
+            break;
+        default:
+            message = "Stato Sconosciuto.";
+            className = "";
+    }
+
+    trafficLightDiv.innerHTML = `<div class="traffic-light-box ${className}">${message}</div>`;
+
+    const favoriteTeams = ["Juventus", "AC Milan", "Inter Milan"]; 
+    const rankingDiv = document.getElementById('team-ranking');
+
+    let olContent = "<ol>";
+    favoriteTeams.forEach((team, index) => {
+        const trophy = index === 0 ? "🏆" : (index === 1 ? "🥈" : "🥉");
+        olContent += `<li>${trophy} ${team}</li>`;
+    });
+    olContent += "</ol>";
+
+    rankingDiv.innerHTML = olContent;
+
+    const prodotti = [
+        { id: 'M001', nome: "Maglia Ufficiale Casa", prezzo: 85.00 },
+        { id: 'S002', nome: "Sciarpa Team", prezzo: 19.99 },
+        { id: 'C003', nome: "Cappellino da Baseball", prezzo: 25.50 }
+    ];
+
+    const catalogDiv = document.getElementById('product-catalog');
+
+    let tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Codice</th>
+                    <th>Nome Articolo</th>
+                    <th>Prezzo (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    prodotti.forEach(prodotto => {
+        tableHTML += `
+            <tr>
+                <td>${prodotto.id}</td>
+                <td>${prodotto.nome}</td>
+                <td>${prodotto.prezzo.toFixed(2)}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    catalogDiv.innerHTML = tableHTML;
+</script>
+
+</body>
+</html>
