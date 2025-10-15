@@ -1,0 +1,154 @@
+<script setup>
+import { ref, computed, reactive, watch } from 'vue';
+
+const eta = ref(17); 
+
+const messaggioEta = computed(() => {
+  return eta.value >= 18 ? "Maggiorenne " : "Minorenne ";
+});
+
+
+const carrello = reactive([
+  { nome: "Libro ", prezzo: 15.99 },
+  { nome: "Cuffie ", prezzo: 45.00 },
+  { nome: "Tazza ", prezzo: 8.50 }
+]);
+
+
+const totaleCarrello = computed(() => {
+  
+  return carrello.reduce((totale, prodotto) => totale + prodotto.prezzo, 0).toFixed(2);
+});
+
+
+const aggiungiArticolo = () => {
+  carrello.push({ nome: `Articolo Extra (${carrello.length + 1})`, prezzo: 10.00 });
+};
+
+
+const username = ref(''); 
+const erroreUsername = ref(''); 
+
+watch(username, (nuovoUsername) => {
+  if (nuovoUsername.length > 0 && nuovoUsername.length < 5) {
+    erroreUsername.value = "⚠️ L'username deve avere almeno 5 caratteri!";
+  } else {
+    erroreUsername.value = ""; 
+  }
+});
+
+
+const contenutoTesto = ref(''); 
+const statoSalvataggio = ref('In attesa di modifiche...'); 
+
+
+watch(contenutoTesto, () => {
+ 
+  statoSalvataggio.value = "Sto salvando... ";
+
+  
+  setTimeout(() => {
+    statoSalvataggio.value = "Salvato! ";
+  }, 1000); 
+});
+</script>
+
+<template>
+  <h1>Esercizi Vue.js - Reattività Avanzata</h1>
+
+  <section>
+    <h2>1. Controllo Maggiore Età</h2>
+    <p>Età attuale: <strong>{{ eta }}</strong></p>
+    <button @click="eta++">Aumenta Età</button>
+    <button @click="eta = Math.max(0, eta - 1)">Diminuisci Età</button>
+    <p>Stato: <span :class="{'maggiorenne': eta >= 18, 'minorenne': eta < 18}">
+      <strong>{{ messaggioEta }}</strong>
+    </span></p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>2. Carrello Semplice</h2>
+    <ul>
+      <li v-for="prodotto in carrello" :key="prodotto.nome">
+        {{ prodotto.nome }} - €{{ prodotto.prezzo.toFixed(2) }}
+      </li>
+    </ul>
+    <button @click="aggiungiArticolo">Aggiungi Articolo di Prova</button>
+    <h3>Totale Carrello: €<strong>{{ totaleCarrello }}</strong></h3>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>3. Validazione Input (Watch)</h2>
+    <label for="username-input">Username (min. 5 caratteri):</label>
+    <input id="username-input" type="text" v-model="username" placeholder="Inserisci username">
+    <p v-if="erroreUsername" class="errore">
+      {{ erroreUsername }}
+    </p>
+    <p v-else-if="username.length >= 5" class="successo">
+      Username valido!
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>4. Salvataggio Automatico (Watch con ritardo)</h2>
+    <textarea v-model="contenutoTesto" rows="5" cols="40" placeholder="Inizia a scrivere qui per attivare il salvataggio automatico..."></textarea>
+    <p>Stato: <span :class="{'salvando': statoSalvataggio.includes('salvando'), 'salvato': statoSalvataggio.includes('Salvato')}">
+      <strong>{{ statoSalvataggio }}</strong>
+    </span></p>
+  </section>
+</template>
+
+<style scoped>
+
+section {
+  padding: 15px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.maggiorenne {
+  color: green;
+}
+
+.minorenne {
+  color: orange;
+}
+
+.errore {
+  color: red;
+  font-weight: bold;
+}
+
+.successo {
+  color: green;
+}
+
+.salvando {
+  color: blue;
+  font-style: italic;
+}
+
+.salvato {
+  color: darkgreen;
+  font-weight: bold;
+}
+
+button {
+  margin-right: 10px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+hr {
+  margin: 30px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+</style>
