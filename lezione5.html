@@ -137,10 +137,10 @@
                 setStatus(status) {
                     if (status === 'success') {
                         this.messageClass = 'success';
-                        this.message = "Operazione completata con successo! 🎉 Stato: Successo";
+                        this.message = "Operazione completata con successo!  Stato: Successo";
                     } else if (status === 'error') {
                         this.messageClass = 'error';
-                        this.message = "Si è verificato un errore! ⚠️ Stato: Errore";
+                        this.message = "Si è verificato un errore!  Stato: Errore";
                     }
                 }
             }
@@ -153,7 +153,7 @@
             }
         });
         Vue.component('saluto-utente', {
-            template: '<div style="margin-bottom: 10px; border-left: 4px solid orange; padding: 10px; background-color: #fff3e0;">Benvenuto nella nostra applicazione! 👋</div>'
+            template: '<div style="margin-bottom: 10px; border-left: 4px solid orange; padding: 10px; background-color: #fff3e0;">Benvenuto Alessandro! </div>'
         });
         Vue.component('info-card', {
             template: `
