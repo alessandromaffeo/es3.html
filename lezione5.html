@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>lezione 5</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #3f51b5;
+            padding-bottom: 5px;
+            color: #3f51b5;
+        }
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .message-container {
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.5s;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .success {
+            background-color: #4CAF50; 
+        }
+        .error {
+            background-color: #F44336; 
+        }
+        .avatar-preview {
+            border-radius: 50%; 
+            border: 3px solid #333;
+            margin: 15px 0;
+            transition: all 0.5s;
+            display: inline-block;
+        }
+        label {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        input[type="number"], input[type="color"] {
+            padding: 5px;
+            margin-left: 5px;
+        }
+        .info-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            max-width: 300px;
+            background-color: #fff;
+            border-radius: 6px;
+        }
+        .info-card h3 {
+            color: #3f51b5;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>lezione 5</h1>
+    <div class="container">
+        <h2>Stato del Messaggio</h2>
+        <div id="app-messaggio">
+            <div :class="messageClass" class="message-container">
+                {{ message }}
+            </div>
+
+            <button @click="setStatus('success')" style="background-color: #4CAF50; color: white;">Imposta come Successo</button>
+            <button @click="setStatus('error')" style="background-color: #F44336; color: white;">Imposta come Errore</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Avatar Personalizzabile</h2>
+        <div id="app-avatar">
+            <label>Larghezza/Altezza (px): <input type="number" v-model.number="size" min="20" max="200"></label>
+            <label>Colore: <input type="color" v-model="color"></label>
+
+            <div 
+                class="avatar-preview"
+                :style="{ 
+                    width: size + 'px', 
+                    height: size + 'px', 
+                    backgroundColor: color 
+                }"
+            ></div>
+            <p>Dimensione attuale: {{ size }}px, Colore: {{ color }}</p>
+        </div>
+    </div>
+
+    <h1>lezione 5</h1>
+    <div class="container">
+        <h2>Saluto Personale</h2>
+        <div id="app-componenti-1">
+            <saluto-utente></saluto-utente>
+            <saluto-utente></saluto-utente>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Card Semplice</h2>
+        <div id="app-componenti-2">
+            <info-card></info-card>
+        </div>
+    </div>
+    
+    <script>
+        new Vue({
+            el: '#app-messaggio',
+            data: {
+                message: "Clicca un pulsante per impostare lo stato del messaggio.",
+                messageClass: null 
+            },
+            methods: {
+                setStatus(status) {
+                    if (status === 'success') {
+                        this.messageClass = 'success';
+                        this.message = "Operazione completata con successo! 🎉 Stato: Successo";
+                    } else if (status === 'error') {
+                        this.messageClass = 'error';
+                        this.message = "Si è verificato un errore! ⚠️ Stato: Errore";
+                    }
+                }
+            }
+        });
+        new Vue({
+            el: '#app-avatar',
+            data: {
+                size: 100, 
+                color: '#2196F3' 
+            }
+        });
+        Vue.component('saluto-utente', {
+            template: '<div style="margin-bottom: 10px; border-left: 4px solid orange; padding: 10px; background-color: #fff3e0;">Benvenuto nella nostra applicazione! 👋</div>'
+        });
+        Vue.component('info-card', {
+            template: `
+                <div class="info-card">
+                    <h3>Titolo della Card</h3>
+                    <p>Contenuto della card... Questo è un paragrafo statico.</p>
+                </div>
+            `
+        });
+        new Vue({
+            el: '#app-componenti-1'
+        });
+        new Vue({
+            el: '#app-componenti-2'
+        });
+    </script>
+
+</body>
+</html>
