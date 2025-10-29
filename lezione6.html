@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>lezione 6</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      display: inline-block;
+      text-align: center;
+      border-radius: 8px;
+      background-color: #fafafa;
+      transition: 0.3s;
+    }
+    .product-card:hover {
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+
+    .alert {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+
+
+    .star {
+      font-size: 30px;
+      cursor: pointer;
+      color: gray;
+      transition: color 0.2s;
+    }
+    .star.active {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>lezione 6</h1>
+
+    <h2>1. Card Prodotto</h2>
+    <product-card
+      v-for="(prodotto, index) in prodotti"
+      :key="index"
+      :nome-prodotto="prodotto.nome"
+      :prezzo="prodotto.prezzo"
+    ></product-card>
+
+    <h2>2. Alert Box</h2>
+    <alert-box messaggio="Operazione riuscita!" tipo="success"></alert-box>
+    <alert-box messaggio="Errore nel caricamento." tipo="error"></alert-box>
+
+
+    <h2>3. Chiudi Modale</h2>
+    <button @click="modaleAperta = true">Apri Modale</button>
+    <div v-if="modaleAperta">
+      <div class="overlay" @click="modaleAperta = false"></div>
+      <modal-dialog @chiudi="modaleAperta = false"></modal-dialog>
+    </div>
+
+
+    <h2>4. Valutazione a Stelle</h2>
+    <star-rating @imposta-valutazione="valutazione = $event"></star-rating>
+    <p v-if="valutazione">Valutazione selezionata: {{ valutazione }} stelle</p>
+  </div>
+
+  <script>
+
+    const ProductCard = {
+      props: {
+        nomeProdotto: {
+          type: String,
+          required: true
+        },
+        prezzo: {
+          type: Number,
+          required: true
+        }
+      },
+      template: `
+        <div class="product-card">
+          <h3>{{ nomeProdotto }}</h3>
+          <p>Prezzo: €{{ prezzo.toFixed(2) }}</p>
+        </div>
+      `
+    };
+
+
+    const AlertBox = {
+      props: {
+        messaggio: {
+          type: String,
+          required: true
+        },
+        tipo: {
+          type: String,
+          required: true,
+          validator: (value) => ['success', 'error'].includes(value)
+        }
+      },
+      template: `
+        <div :class="['alert', tipo]">
+          {{ messaggio }}
+        </div>
+      `
+    };
+
+
+    const ModalDialog = {
+      template: `
+        <div class="modal">
+          <p>Questa è una modale.</p>
+          <button @click="$emit('chiudi')">Chiudi</button>
+        </div>
+      `
+    };
+
+
+    const StarRating = {
+      data() {
+        return {
+          selected: 0
+        };
+      },
+      methods: {
+        selectRating(n) {
+          this.selected = n;
+          this.$emit('imposta-valutazione', n);
+        }
+      },
+      template: `
+        <div>
+          <span 
+            v-for="n in 5" 
+            :key="n" 
+            class="star" 
+            :class="{ active: n <= selected }" 
+            @click="selectRating(n)"
+          >
+            ★
+          </span>
+        </div>
+      `
+    };
+
+
+    const app = Vue.createApp({
+      components: {
+        ProductCard,
+        AlertBox,
+        ModalDialog,
+        StarRating
+      },
+      data() {
+        return {
+          prodotti: [
+            { nome: 'Laptop', prezzo: 999 },
+            { nome: 'Mouse', prezzo: 25 },
+            { nome: 'Tastiera', prezzo: 50 }
+          ],
+          modaleAperta: false,
+          valutazione: null
+        };
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
